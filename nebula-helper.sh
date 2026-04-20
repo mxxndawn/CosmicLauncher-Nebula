@@ -8,7 +8,7 @@ cd "$SCRIPT_DIR" || exit 1
 PAGE="Home"
 WARNING=""
 
-ENV_FILE=".env"
+ENV_FILE="./.env"
 RESET_LIST=".reset_exclusion_list"
 
 ENV_FOUND=0
@@ -49,9 +49,14 @@ trim() {
   printf '%s' "$1" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//'
 }
 
+env_file_exists() {
+  found=$(find . -maxdepth 1 -type f -name '.env' -print -quit 2>/dev/null)
+  [ "$found" = "./.env" ]
+}
+
 get_env_value() {
   key="$1"
-  if [ ! -f "$ENV_FILE" ]; then
+  if ! env_file_exists; then
     return
   fi
   sed -n "s/^[[:space:]]*$key[[:space:]]*=[[:space:]]*//p" "$ENV_FILE" | tail -n 1 | sed 's/[[:space:]]*$//'
@@ -80,7 +85,7 @@ refresh_status() {
   SERVER_COUNT=0
   DIST_FOUND=0
 
-  if [ -f "$ENV_FILE" ]; then
+  if env_file_exists; then
     ENV_FOUND=1
     ROOT_VALUE=$(trim "$(get_env_value ROOT)")
     BASE_URL_VALUE=$(trim "$(get_env_value BASE_URL)")
