@@ -1,6 +1,7 @@
 # Nebula
 
-Generate a distribution.json for Helios. Documentation on this format can be found [here][distro.md].
+HeliosLaunehr(혹은 포크된 다른 런처)에 사용되는 distribution.json을 제작하는 도구 입니다.
+Documentation on this format can be found [here][distro.md].
 
 ## Requirements
 
@@ -11,21 +12,42 @@ Generate a distribution.json for Helios. Documentation on this format can be fou
 
 ## Setup
 
-1. Clone the repository
-2. Install the dependencies (`npm i`)
-3. Create a file called [`.env`][dotenvnpm] at the root directory of the cloned folder and set the required values.
+1. repository를 Clone 한다.
+2. 종속성을 설치한다. (`npm i`)
+3. [`.env`][dotenvnpm]파일을 Clone된 폴더 최상단에 생성하고 아래와 같은 형식으로 내용을 입력한다.
 
-Example
+.env 파일 예제
 ```properties
 JAVA_EXECUTABLE=C:\Program Files\Eclipse Adoptium\jdk-17.0.12.7-hotspot\bin\java.exe
 ROOT=D:\TestRoot2
 BASE_URL=http://localhost:8080/
 HELIOS_DATA_FOLDER=C:\Users\user\AppData\Roaming\Helios Launcher
 ```
+## Setup & Using guide for KR
 
+1. Repo 클론 : git clone <repo url>
+2. 종속성 설치 : npm i
+3. 작업데이터 환경변수 설정 : .env
+   1. 'JAVA_EXECUTABLE=' : Nebula 작업중 Java가 필요한 단계에서 사용할 로컬 Java파일 경로. 필수.
+   2. 'ROOT=' : 기본 작업폴더를 설정. 외부에 유지할지 내부에 유지할지는 자유이며, 비워둔다면 './' 경로를 사용하게됨. 추천은 './serverdata' (\가 아닌 / 임을 명시하자)
+   3. 'BASE_URL=' : CDN Server의 DNS를 입력한다. 실제로 아래에서 파일위치<->원격위치의 치환이 진행된다. 반드시 http 또는 https를 포함해야한다.
+   ${ROOT}/server/<서버명>/<forge/fabric>mods/<Mod Use Option/**<Mod Name>.jar
+   ${BASE_URL}/servers/TEST123-1.20.1/fabricmods/<Mod Use Option>/<Mode Name>.jar
+   4. 'HELIOS_DATA_FOLDER=' : --installLocal 옵션 사용시 필요한 경로. 일반적으로는 필요하지 않다.
+4. 기본 작업폴더 생성 : npm run start -- init root
+5. 서버 작업폴더 생성 : 기본 명령어 구성 npm run start -- generate server <서버명> <mc버전> <옵션> <옵션string>
+   1. 기본 서버 생성시 : 서버명, mc버전은 필수로 작성
+   npm run start --generate server TEST1 1.20.1
+   2. forge 서버 생성시 : 옵션 string은 작성하지 않으면 옵션 비활성, latest/recommended 옵션 사용가능
+   npm run start --generate server TEST-FORGE 1.20.1 --forge 47.4.20
+   3. fabric 서버 생성시 : 옵션 string은 작성하지 않으면 옵션 비활성, latest/recommended 옵션 사용가능
+   npm run start --generate server TEST-FABRIC 1.20.1 --fabric 0.19.2
+6. ${ROOT}\servers\<서버명> 아래에 모드, 라이브러리, 설정파일 등 을 배치한다.
+7. distribution.json 생성 : npm start -- generate distro
+   
 ## Usage
 
-Nebula is still being developed. Usage may change, but it has remained stable for some time now.
+Nebula는 개발중인 프로젝트 입니다. 사용방법은 변경될 수 있지만, 한동안 안정적으로 유지될 것 입니다.
 
 #### TL;DR (Too Long; Didn't Read) Usage
 
