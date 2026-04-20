@@ -30,6 +30,7 @@ exit /b
 
 :refresh
 set "ENV_FOUND=0"
+set "ENV_EXACT_FOUND=0"
 set "ROOT_VALUE="
 set "BASE_URL_VALUE="
 set "JAVA_VALUE="
@@ -40,7 +41,11 @@ set "SERVERS_FOUND=0"
 set "SERVER_COUNT=0"
 set "DIST_FOUND=0"
 
-if exist "%ENV_FILE%" (
+for /f "delims=" %%F in ('dir /b /a-d 2^>nul') do (
+  if "%%F"==".env" set "ENV_EXACT_FOUND=1"
+)
+
+if "%ENV_EXACT_FOUND%"=="1" (
   set "ENV_FOUND=1"
   for /f "usebackq tokens=1* delims==" %%A in ("%ENV_FILE%") do (
     if /i "%%A"=="ROOT" set "ROOT_VALUE=%%B"
