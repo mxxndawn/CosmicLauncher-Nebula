@@ -10,7 +10,6 @@ README.md
 eslint.config.mjs
 libraries
 nebula-helper.bat
-nebula-helper*.md
 nebula-helper.sh
 package-lock.json
 package.json
