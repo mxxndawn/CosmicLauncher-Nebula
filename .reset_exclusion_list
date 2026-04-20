@@ -1,0 +1,18 @@
+# Top-level files and folders preserved by Nebula Helper reset.
+.git
+.github
+.gitignore
+.nvmrc
+.reset_exclusion_list
+.vscode
+LICENSE
+README.md
+eslint.config.mjs
+libraries
+nebula-helper.bat
+nebula-helper*.md
+nebula-helper.sh
+package-lock.json
+package.json
+src
+tsconfig.json
